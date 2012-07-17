@@ -1,0 +1,43 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+<h1>WebSocket Test</h1>
+
+<canvas width="720" height="510"></canvas>
+<a id="link" target="_blank"><img id="qr"></a>
+
+<script src="/public/javascripts/jaws.js"></script>
+<script src="/public/javascripts/SpaceGame.js"></script>
+<script>
+var ws;
+$.get('@{Application.generateId()}',function(data){
+	var id = data;
+	console.log(data);
+	
+	openws(id);
+	jaws.start(SpaceGame);
+})
+
+
+
+
+
+function openws(id){
+	ws = new WebSocket("ws://${host}/websockets/application?id="+id);
+	
+
+	ws.onopen = function(evt){
+		console.log("open");
+		$('#qr').attr('src','http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=http://${host}/remote/controller/'+id);
+		$('#link').attr('href','http://${host}/controller/'+id);
+	}
+
+	ws.onmessage = function(evt){
+		console.log(evt.data)
+	}
+}
+
+
+
+
+
+</script>

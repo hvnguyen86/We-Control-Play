@@ -1,0 +1,126 @@
+#{extends 'main.html' /}
+
+#{set 'moreStyles'}
+ #{stylesheet 'styleControllerFF.css' /}
+#{/set}
+
+<div id="main">
+	
+	<div id="controller">
+		<div id="right" class="d-cross-pad">
+			<img src="/public/images/ps_right.png">
+		</div>
+		<div id="left" class="d-cross-pad">
+			<img src="/public/images/ps_left.png">
+		</div>
+		<div id="up" class="d-cross-pad">
+			<img src="/public/images/ps_up.png">
+		</div>
+		<div id="down" class="d-cross-pad">
+			<img src="/public/images/ps_down.png">
+		</div>
+	</div>
+	<div id="button">
+		<div id="rectangle" class="button">
+			<img src="/public/images/button_rectangle.png">
+		</div>
+		<div id="circle" class="button">
+			<img src="/public/images/button_circle.png">
+		</div>
+		<div id="triangle" class="button">
+			<img src="/public/images/button_triangle.png">
+		</div>
+		<div id="x" class="button">
+			<img src="/public/images/button_x.png">
+		</div>
+	</div>
+</div>
+<script src="/public/javascripts/phantomLimb2.js"></script>
+<script>
+var ws = new WebSocket("ws://${host}/websockets/controller?id=${id}")
+document.addEventListener('touchstart', function(event){
+	 event.preventDefault();
+	 }, false);
+	 
+	 document.addEventListener('touchend', function(event){
+	 event.preventDefault();
+	 }, false);
+	  
+	 document.addEventListener('touchmove', function(event){
+	 event.preventDefault();
+	 }, false);
+	 //Touch
+	 document.getElementById('up').addEventListener("touchstart",up,true);
+	 document.getElementById('down').addEventListener("touchstart",down,true);
+	 document.getElementById('down').addEventListener("touchend",stop,true);
+	 document.getElementById('up').addEventListener("touchend",stop,true);
+	 document.getElementById('left').addEventListener("touchstart",left,true);
+	 document.getElementById('right').addEventListener("touchstart",right,true);
+	 document.getElementById('left').addEventListener("touchend",stop,true);
+	 document.getElementById('right').addEventListener("touchend",stop,true);
+	 document.getElementById('rectangle').addEventListener("touchstart",apple,true);
+	 document.getElementById('triangle').addEventListener("touchstart",apple,true);
+	 document.getElementById('x').addEventListener("touchstart",apple,true);
+	 document.getElementById('circle').addEventListener("touchstart",apple,true);
+	 
+	 //Mouse
+	 /*document.getElementById('up').addEventListener("mousedown",up,true);
+	 document.getElementById('down').addEventListener("mousedown",down,true);
+	 document.getElementById('down').addEventListener("mouseup",stop,true);
+	 document.getElementById('up').addEventListener("mouseup",stop,true);
+	 document.getElementById('left').addEventListener("mousedown",left,true);
+	 document.getElementById('right').addEventListener("mousedown",right,true);
+	 document.getElementById('left').addEventListener("mouseup",stop,true);
+	 document.getElementById('right').addEventListener("mouseup",stop,true);
+	 document.getElementById('apple').addEventListener("mousedown",apple,true);*/
+	  
+	 function apple(){
+	  ws.send('apple');
+	 }
+	 function stop(){
+	  clearTimeout(timeout);
+	  
+	 }
+	 
+	 document.oncontextmenu = stop;
+	 
+	 //var variTime = 100;
+	 function up(event,variTime){
+	  event.preventDefault();
+	  var variTime = variTime || 50;
+	  ws.send("up");		
+	  timeout = setTimeout(function() {
+	  variTime = Math.max((variTime - (variTime / 5)), 50);
+	  up(event,variTime);
+	  }, variTime);
+	  }
+	 function down(event,variTime){
+	  event.preventDefault();
+	  var variTime = variTime || 50;
+	  ws.send("down");		
+	  timeout = setTimeout(function() {
+	  variTime = Math.max((variTime - (variTime / 5)), 50);
+	  down(event,variTime);
+	  }, variTime);
+	  }
+	 function right(event,variTime){
+	  event.preventDefault();
+	  var variTime = variTime || 50;
+	  ws.send("right");		
+	  timeout = setTimeout(function() {
+	  variTime = Math.max((variTime - (variTime / 5)), 50);
+	  right(event,variTime);
+	  }, variTime);
+	  }
+	 function left(event,variTime){
+	  event.preventDefault();
+	 var variTime = variTime || 50;
+	  ws.send("left");
+	  timeout = setTimeout(function() {
+	  variTime = Math.max((variTime - (variTime / 5)), 50);
+	  left(event,variTime);
+	  }, variTime);
+	  }
+
+
+</script>
