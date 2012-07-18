@@ -17,7 +17,7 @@ public class Application extends Controller {
     	String host = getHost();
         render(host);
     }
-    
+    //test
     public static void controller(String id){
     	
     	String host = getHost();
