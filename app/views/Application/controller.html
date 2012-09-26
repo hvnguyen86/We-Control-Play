@@ -37,7 +37,7 @@
 </div>
 <script src="/public/javascripts/phantomLimb2.js"></script>
 <script>
-var ws = new WebSocket("ws://${host}/websockets/controller?id=${id}")
+var ws = new WebSocket("ws://"+window.location.host+"/websockets/controller?id=${id}")
 document.addEventListener('touchstart', function(event){
 	 event.preventDefault();
 	 }, false);

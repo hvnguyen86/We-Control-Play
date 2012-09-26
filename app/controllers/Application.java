@@ -14,14 +14,14 @@ import models.*;
 public class Application extends Controller {
 	
     public static void index() {
-    	String host = getHost();
-        render(host);
+    	
+        render();
     }
     //test
     public static void controller(String id){
     	
     	String host = getHost();
-    	render(host,id);
+    	render(id);
  
  
     }

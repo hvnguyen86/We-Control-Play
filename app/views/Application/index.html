@@ -22,13 +22,13 @@ $.get('@{Application.generateId()}',function(data){
 
 
 function openws(id){
-	ws = new WebSocket("ws://${host}/websockets/application?id="+id);
+	ws = new WebSocket("ws://"+window.location.host+"/websockets/application?id="+id);
 	
 
 	ws.onopen = function(evt){
 		console.log("open");
-		$('#qr').attr('src','http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=http://${host}/remote/controller/'+id);
-		$('#link').attr('href','http://${host}/controller/'+id);
+		$('#qr').attr('src','http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=http://'+window.location.host+'/remote/controller/'+id);
+		$('#link').attr('href','http://'+window.location.host+'/controller/'+id);
 	}
 
 	ws.onmessage = function(evt){
